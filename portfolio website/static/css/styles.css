@@ -1,0 +1,150 @@
+.main {
+	width: 80%;
+	margin: auto;
+}
+
+.header-content {
+	display: flex;
+	justify-content: space-between;
+	height: 100px;
+	margin: 5px;
+}
+
+.personal-info {
+	text-align: right;
+	font-family: "Ubuntu", sans-serif;
+	margin-top: auto;
+	margin-bottom: auto;
+	font-weight: 300;
+}
+
+.project {
+	width: 33%;
+}
+
+.projects-container {
+	display: flex;
+}
+
+.name {
+	font-size: 3em;
+	font-weight: 400;
+}
+
+.status {
+	font-size: 1.5em;
+}
+
+#udacity-logo {
+	margin-top: auto;
+	margin-bottom: auto;
+	max-width: 30%;
+	max-height: 90%;
+}
+
+.split-line {
+	background-color: #7d97ad;
+	height: 3px;
+	margin: 5px;
+}
+
+.content {
+	margin: 5px;
+	padding: 0;
+}
+
+.about {
+	position: relative;
+}
+
+.background-image {
+	background-image: url("../img/background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	position: absolute;
+	z-index: -1;
+	opacity: 0.3;
+}
+
+.about-text {
+	margin: 10px;
+	position: relative;
+	font-family: "Ubuntu", sans-serif;
+	z-index: 5;
+}
+
+.project {
+	box-shadow: 5px 5px 25px 0 rgba(46, 61, 73, 0.2);
+	margin: 10px;
+}
+
+.project-image {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.project-header {
+	text-align: center;
+	font-family: "Ubuntu", sans-serif;
+	font-weight: 400;
+}
+
+.projects-block-header {
+	margin: 10px;
+	font-family: "Ubuntu", sans-serif;
+}
+
+@media only screen and (max-width: 360px) {
+
+	.projects-container {
+		flex-direction: column;
+	}
+
+	.project {
+		width: 90%;
+		margin: auto;
+	}
+
+	.personal-info {
+		width: 100%;
+	}
+
+	#udacity-logo {
+		max-width: 90%;
+		margin: auto;
+		margin-bottom: 10px;
+	}
+
+	.name {
+		font-size: 2em;
+	}
+
+	.status {
+		font-size: 1.2em;
+	}
+
+	.header-content {
+		flex-direction: column;
+		padding-bottom: 10px;
+	}
+
+	.content {
+		padding-top: 5px;
+	}
+}
+
+@media only screen and (min-width: 361px) and (max-width: 800px) {
+
+	.name {
+		font-size: 1.8em;
+	}
+
+	.status {
+		font-size: 1.2em;
+	}
+}

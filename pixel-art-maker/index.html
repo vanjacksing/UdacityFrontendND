@@ -14,13 +14,13 @@
     <h1>Lab: Pixel Art Maker</h1>
 
     <h2>Choose Grid Size</h2>
-    <div id="sizePicker">
+    <form id="sizePicker">
         <label for="input_height">Grid Height:</label>
-        <input type="number" id="input_height" name="height" min="1" value="20">
+        <input type="number" id="input_height" name="height" min="1" max="50" value="20" required placeholder="Height">
         <label for="input_width">Grid Width:</label>
-        <input type="number" id="input_width" name="width" min="1" value="20">
-        <button id="submit_button">Create canvas!</button>
-    </div>
+        <input type="number" id="input_width" name="width" min="1" max="50" value="20" required placeholder="Width">
+        <input type="submit" id="submit_button" value="Create canvas!">
+    </form>
 
     <h2>Pick A Color</h2>
     <input type="color" id="colorPicker">

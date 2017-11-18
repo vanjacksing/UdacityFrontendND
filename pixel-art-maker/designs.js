@@ -4,13 +4,14 @@ let color;
 let inputHeight;
 let inputWidth;
 // Variables for DOM elements
-let picker, table, submit_button, input_height,input_width;
+let sizePicker, picker, table, submit_button, input_height,input_width;
 
 // Initialize all variables and create table
 $(initializer);
 
 // Initializint variables with jQuery selectors
 function elementInitializer() {
+	sizePicker = $("#sizePicker");
 	picker = $('#colorPicker');
 	table = $('table');
 	submit_button = $('#submit_button');
@@ -31,9 +32,13 @@ function initializer() {
 	submit_button.click(makeGrid);
 	table.on('click', 'td', function() {
 		$(this).css("background-color", color);
-	})
+	});
 	picker.change(function() {
 		color = $(this).val();
+	});
+	sizePicker.on('submit', function(e) {
+    	e.preventDefault();
+    	makeGrid();
 	});
 	makeGrid();
 }

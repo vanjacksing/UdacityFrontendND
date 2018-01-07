@@ -37,6 +37,10 @@ h1 {
  * Styles for the deck of cards
  */
 
+ .deck-container {
+     position: relative;
+ }
+
 .deck {
     width: 660px;
     min-height: 680px;
@@ -77,8 +81,13 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: #02ccba;
+    background: #02ccbbd7;
     font-size: 33px;
+    animation: match-pop-up 1s alternate ease-out;
+}
+
+@keyframes match-pop-up {
+    50% {transform: scale(1.2);}
 }
 
 /*
@@ -106,4 +115,71 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.score-panel .timer {
+    margin-left: 50px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    max-height: 680px;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #02ccbbd7;
+    margin: 10%;
+    border: 1px solid #888;
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    color: white;
+}
+
+.modal.is-endgame {
+    display: block;
+}
+
+.congrats {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.newgame-button {
+    border: 2px solid white;
+    margin: 10px;
+    width: 150px;
+    height: 50px;
+    font-size: 1.3em;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.endgame-score li{
+    display: inline-block;
+}
+
+.score-paragraph {
+    display: inline-block;
+}
+
+.endgame-score {
+    display: inline-block;
+    padding-left: 10px;
 }

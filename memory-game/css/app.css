@@ -86,6 +86,7 @@ h1 {
     animation: match-pop-up 1s alternate ease-out;
 }
 
+
 /* Animation for matched cards */
 @keyframes match-pop-up {
     50% {transform: scale(1.2);}

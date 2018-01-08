@@ -226,28 +226,34 @@ game.UI.deck.addEventListener('click', function showCard(evt) {
 	}
 	/* Capture card element */
 	let card = (evt.target.nodeName == "LI") ? evt.target : evt.target.parentNode;
-	/* Show the card */
-	toggleOpenShow(card);
 	/* Update opened card if none present */
 	if (game.openedCard == null) {
 		game.openedCard = card;
+		/* Show the card */
+		toggleOpenShow(card);
 	} else {
-		/* If a card is already opened update number of moves */
-		if (card != game.openedCard) {
-			updateMoves();
-		}
 		/* On match toggle 'match' class for card, update match counter and reset opened card to null */
 		if (detectMatch(card)) {
 			game.matchCounter += 1;
 			game.openedCard.classList = "card match";
 			card.classList = "card match";
+			/* If a card is already opened update number of moves */
+			updateMoves();
             game.openedCard = null;
 		}
 		/* If cards don't match - hide them with delay and reset opened card */ 
 		else {
-			setTimeout(toggleOpenShow, 1000, game.openedCard);
-			setTimeout(toggleOpenShow, 1000, card);
-			game.openedCard = null;
+			/* If a different card was clicked - flip both face down */
+			if (game.openedCard != card) {
+			  /* First flip clicked card face up */
+			  toggleOpenShow(card);
+			  /* Then flip both cards face down */
+			  setTimeout(toggleOpenShow, 1000, game.openedCard);
+			  setTimeout(toggleOpenShow, 1000, card);
+			  updateMoves();
+              game.openedCard = null;
+			} 
+			/* If the same card was clicked - do nothing */
 		}
 	}
 	/* If all cards have been matched - show endgame screen and stop the timer */

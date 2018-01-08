@@ -29,6 +29,7 @@ var game = {
   timer: null, /* Timer object, incrementing timeElapsed variable every second */
   timeElapsed: 0, /* Time since game start */
   score: 3, /* Current number of star scores */
+  gameStarted: false, /* Indicated whether the game has started */
   UI: {
 	  deck: document.querySelector('.deck'),
 	  restartButton: document.querySelector('.restart'), /* Reset button at the top of the deck */
@@ -91,6 +92,7 @@ function resetGame() {
 	game.moves = 0;
 	game.timeElapsed = 0;
 	game.score = 3;
+	game.gameStarted = false;
 	if (game.timer!=null) {
 		clearInterval(game.timer);
 	}
@@ -215,8 +217,9 @@ game.UI.endgameRestartButton.addEventListener('click', function() {
 /* Event listener for card click. Contains game logic */
 game.UI.deck.addEventListener('click', function showCard(evt) {
 	/* Start the timer on first move */
-	if (game.moves == 0 && game.openedCard == null) {
+	if (game.moves == 0 && game.openedCard == null && !game.gameStarted) {
 		game.timer = setInterval(function() {
+			game.gameStarted = true;
 			game.timeElapsed += 1;
 			game.UI.timePanel.innerHTML = formatTimer(game.timeElapsed);
 		}, 1000);
@@ -230,7 +233,9 @@ game.UI.deck.addEventListener('click', function showCard(evt) {
 		game.openedCard = card;
 	} else {
 		/* If a card is already opened update number of moves */
-		updateMoves();
+		if (card != game.openedCard) {
+			updateMoves();
+		}
 		/* On match toggle 'match' class for card, update match counter and reset opened card to null */
 		if (detectMatch(card)) {
 			game.matchCounter += 1;

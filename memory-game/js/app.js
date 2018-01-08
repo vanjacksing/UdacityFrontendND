@@ -226,39 +226,41 @@ game.UI.deck.addEventListener('click', function showCard(evt) {
 	}
 	/* Capture card element */
 	let card = (evt.target.nodeName == "LI") ? evt.target : evt.target.parentNode;
-	/* Update opened card if none present */
-	if (game.openedCard == null) {
-		game.openedCard = card;
-		/* Show the card */
-		toggleOpenShow(card);
-	} else {
-		/* On match toggle 'match' class for card, update match counter and reset opened card to null */
-		if (detectMatch(card)) {
-			game.matchCounter += 1;
-			game.openedCard.classList = "card match";
-			card.classList = "card match";
-			/* If a card is already opened update number of moves */
-			updateMoves();
-            game.openedCard = null;
+	if (!card.classList.contains("match")) {
+		/* Update opened card if none present */
+		if (game.openedCard == null) {
+			game.openedCard = card;
+			/* Show the card */
+			toggleOpenShow(card);
+		} else {
+			/* On match toggle 'match' class for card, update match counter and reset opened card to null */
+			if (detectMatch(card)) {
+				game.matchCounter += 1;
+				game.openedCard.classList = "card match";
+				card.classList = "card match";
+				/* If a card is already opened update number of moves */
+				updateMoves();
+				game.openedCard = null;
+			}
+			/* If cards don't match - hide them with delay and reset opened card */ 
+			else {
+				/* If a different card was clicked - flip both face down */
+				if (game.openedCard != card) {
+				/* First flip clicked card face up */
+				toggleOpenShow(card);
+				/* Then flip both cards face down */
+				setTimeout(toggleOpenShow, 1000, game.openedCard);
+				setTimeout(toggleOpenShow, 1000, card);
+				updateMoves();
+				game.openedCard = null;
+				} 
+				/* If the same card was clicked - do nothing */
+			}
 		}
-		/* If cards don't match - hide them with delay and reset opened card */ 
-		else {
-			/* If a different card was clicked - flip both face down */
-			if (game.openedCard != card) {
-			  /* First flip clicked card face up */
-			  toggleOpenShow(card);
-			  /* Then flip both cards face down */
-			  setTimeout(toggleOpenShow, 1000, game.openedCard);
-			  setTimeout(toggleOpenShow, 1000, card);
-			  updateMoves();
-              game.openedCard = null;
-			} 
-			/* If the same card was clicked - do nothing */
+		/* If all cards have been matched - show endgame screen and stop the timer */
+		if (game.matchCounter == 8) {
+			clearInterval(game.timer);
+			showEndgameScreen();
 		}
-	}
-	/* If all cards have been matched - show endgame screen and stop the timer */
-	if (game.matchCounter == 8) {
-		clearInterval(game.timer);
-		showEndgameScreen();
 	}
 });

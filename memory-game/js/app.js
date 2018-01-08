@@ -1,6 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
+
+/* Object storing game variables and UI elements */
+
 var game = {
   symbols: [
     "fa-500px",
@@ -20,18 +23,19 @@ var game = {
     "fa-linux",
     "fa-google"
   ], 
-  openedCard: null,
-  moves: 0,
-  matchCounter: 0, 
-  timer: null,
-  timeElapsed: 0,
-  score: 3,
+  openedCard: null, /* Represents currently opened card */
+  moves: 0, /* Number of moves */
+  matchCounter: 0, /* Number of matches for tracking endgame condition */
+  timer: null, /* Timer object, incrementing timeElapsed variable every second */
+  timeElapsed: 0, /* Time since game start */
+  score: 3, /* Current number of star scores */
   UI: {
 	  deck: document.querySelector('.deck'),
-	  restartButton: document.querySelector('.restart'),
-	  moveCounter: document.querySelector('.moves'),
-	  scorePanel: document.querySelector('.stars'),
+	  restartButton: document.querySelector('.restart'), /* Reset button at the top of the deck */
+	  moveCounter: document.querySelector('.moves'), 
+	  scorePanel: document.querySelector('.stars'), /* Panel with star scores */
 	  timePanel: document.querySelector('.timer'),
+	  /* UI elements for endgame screen */
 	  endgameTime: document.querySelector('#endgame-time'),
 	  endgameMoves: document.querySelector('#endgame-moves'),
 	  endgameScore: document.querySelector('.endgame-score'),
@@ -47,11 +51,11 @@ var game = {
  *   - add each card's HTML to the page
  */
  function createCardLayout() {
-
+	/* Function that resets the game */
 	 let cardSymbols = shuffle(game.symbols);
 	 const deckFragment = document.createDocumentFragment();
 	 game.UI.deck.innerHTML = '';
-
+	/* Creating layout */
 	 for (let symbol of cardSymbols) {
 		const card = document.createElement('li');
 		card.classList.add("card");
@@ -62,7 +66,9 @@ var game = {
 		deckFragment.appendChild(card);
 	 }
 	 game.UI.deck.appendChild(deckFragment);
+	 /* Reset game variables: timer, score, moves, etc */
 	 resetGame();
+	 /* Reset game UI to default values */
 	 resetUI();
  }
 
@@ -79,7 +85,7 @@ function shuffle(array) {
 
     return array;
 }
-
+/* Reset game variables */
 function resetGame() {
 	game.matchCounter = 0;
 	game.moves = 0;
@@ -89,17 +95,19 @@ function resetGame() {
 		clearInterval(game.timer);
 	}
 }
-
+/* Reset game UI */
 function resetUI() {
     game.UI.moveCounter.innerHTML = '0';
     game.UI.timePanel.innerHTML = '00:00';
     updateStarScore(3);
 }
 
+/* Get symbol inside LI card element */
 function getCardSymbol(card) {
 	return card.firstElementChild.classList[1];
 }
 
+/* Detect if card symbol matches the symbol of already opened card */
 function detectMatch(card) {
 	if ((getCardSymbol(game.openedCard)) == getCardSymbol(card) && game.openedCard!=card) {
     	return true;
@@ -107,6 +115,7 @@ function detectMatch(card) {
 	return false;
 	}
 
+/* Formats timeElapsed variable to mm:ss format */
 function formatTimer(total) {
 	const minutes = Math.floor(total / 60);
 	const seconds = total % 60;
@@ -125,6 +134,7 @@ function formatTimer(total) {
 	return minutesFormatted + ':' + secondsFormatted;
 }
 
+/* Toggles 'open' and 'show' classes for a card */
 function toggleOpenShow(elem) {
 	if (!elem.classList.contains("match") & elem.classList.contains("card")) {
 	    elem.classList.toggle("open");
@@ -132,6 +142,7 @@ function toggleOpenShow(elem) {
 	}
 }
 
+/* Update variable for number of moves and set star score depending on moves count */
 function updateMoves() {
 	game.moves += 1;
 	if (game.moves < 12) {
@@ -147,6 +158,7 @@ function updateMoves() {
 	game.UI.moveCounter.textContent = game.moves;
 }
 
+/* Create a fragment with stars for updating star score on UI */
 function getStarScoreFragment(score) {
 const starPanelFragment = document.createDocumentFragment();
 	for (let i = 0; i < score; i++) {
@@ -159,18 +171,21 @@ const starPanelFragment = document.createDocumentFragment();
 return starPanelFragment;
 }
 
+/* Updated star score during the game */
 function updateStarScore(score) {
 	game.UI.scorePanel.innerHTML = '';
 	const starScoreFragment = getStarScoreFragment(score)
 	game.UI.scorePanel.appendChild(starScoreFragment);
 }
 
+/* Updates star score for endgame screen */
 function updateEndgameStarScore(score) {
 	game.UI.endgameScore.innerHTML = '';
 	const starScoreFragment = getStarScoreFragment(score);
 	game.UI.endgameScore.appendChild(starScoreFragment);
 }
 
+/* Update endgame screen info and make it visible */
 function showEndgameScreen() {
 	game.UI.endgameMoves.innerHTML = game.moves;
 	game.UI.endgameTime.innerHTML = formatTimer(game.timeElapsed);
@@ -188,38 +203,49 @@ function showEndgameScreen() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
+/* Add event listener for Reset button */
 game.UI.restartButton.addEventListener('click', createCardLayout);
 
+/* Add event listener for Reset button on endgame screen */
 game.UI.endgameRestartButton.addEventListener('click', function() {
 	createCardLayout();
 	game.UI.endgameModal.classList.toggle("is-endgame");
 });
 
+/* Event listener for card click. Contains game logic */
 game.UI.deck.addEventListener('click', function showCard(evt) {
+	/* Start the timer on first move */
 	if (game.moves == 0 && game.openedCard == null) {
 		game.timer = setInterval(function() {
 			game.timeElapsed += 1;
 			game.UI.timePanel.innerHTML = formatTimer(game.timeElapsed);
 		}, 1000);
 	}
+	/* Capture card element */
 	let card = (evt.target.nodeName == "LI") ? evt.target : evt.target.parentNode;
+	/* Show the card */
 	toggleOpenShow(card);
+	/* Update opened card if none present */
 	if (game.openedCard == null) {
 		game.openedCard = card;
 	} else {
+		/* If a card is already opened update number of moves */
 		updateMoves();
+		/* On match toggle 'match' class for card, update match counter and reset opened card to null */
 		if (detectMatch(card)) {
 			game.matchCounter += 1;
 			game.openedCard.classList = "card match";
 			card.classList = "card match";
             game.openedCard = null;
-		} else {
+		}
+		/* If cards don't match - hide them with delay and reset opened card */ 
+		else {
 			setTimeout(toggleOpenShow, 1000, game.openedCard);
 			setTimeout(toggleOpenShow, 1000, card);
 			game.openedCard = null;
 		}
 	}
+	/* If all cards have been matched - show endgame screen and stop the timer */
 	if (game.matchCounter == 8) {
 		clearInterval(game.timer);
 		showEndgameScreen();

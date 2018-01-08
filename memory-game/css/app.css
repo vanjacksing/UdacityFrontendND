@@ -81,11 +81,12 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: #02ccbbd7;
+    background: #02cbd7;
     font-size: 33px;
     animation: match-pop-up 1s alternate ease-out;
 }
 
+/* Animation for matched cards */
 @keyframes match-pop-up {
     50% {transform: scale(1.2);}
 }
@@ -121,6 +122,7 @@ h1 {
     margin-left: 50px;
 }
 
+/* Endgame modal window styling */
 .modal {
     display: none; /* Hidden by default */
     position: absolute; /* Stay in place */
@@ -135,12 +137,13 @@ h1 {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+/* Content of modal window */
 .modal-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #02ccbbd7;
+    background-color: #02cbd7;
     margin: 10%;
     border: 1px solid #888;
     width: 80%;
@@ -150,14 +153,16 @@ h1 {
 }
 
 .modal.is-endgame {
-    display: block;
+    display: block; /* Reveal endgame modal */
 }
 
+/* Congratulations text */
 .congrats {
     font-size: 2em;
     margin-bottom: 20px;
 }
 
+/* Reset button on endgame screen */
 .newgame-button {
     border: 2px solid white;
     margin: 10px;
@@ -170,6 +175,10 @@ h1 {
     flex-direction: column;
     cursor: pointer;
 }
+
+/* 
+Styling for scores on endgame screen 
+*/
 
 .endgame-score li{
     display: inline-block;

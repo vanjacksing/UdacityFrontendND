@@ -52,6 +52,9 @@ var Engine = (function(global) {
          */
         lastTime = now;
 
+        // Generate enemies
+        enemyGenerator.updateState();
+
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
@@ -79,7 +82,26 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        if (checkVictory()) {
+            console.log("Victory!");
+            reset();
+        }
+    }
+
+    function checkCollisions() {
+        const COLLISION_THRESHOLD = 70;
+        allEnemies.forEach(enemy => {
+            var enemyCoord = enemy.getCenterCoord();
+            var playerCoord = player.getCenterCoord();
+            if (Math.sqrt((enemyCoord.xCenter - playerCoord.xCenter)**2 + (enemyCoord.yCenter - playerCoord.yCenter)**2) < COLLISION_THRESHOLD) {
+                reset();
+            }
+        })
+    }
+
+    function checkVictory() {
+        return player.position.y < 63;
     }
 
     /* This is called by the update function and loops through all of the
@@ -90,6 +112,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        allEnemies = allEnemies.filter(enemy => enemy.position.x < 505);
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
@@ -161,7 +184,9 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        player.position.x = 101 * 2;
+        player.position.y = 83 * 5 -20;
+        //allEnemies = [];
     }
 
     /* Go ahead and load all of the images we know we're going to need to

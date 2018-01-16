@@ -1,6 +1,20 @@
-frontend-nanodegree-arcade-game
+Frogger Game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+This project represents a very basic browser version of a game called _"Frogger"_. The goal is to move the charater to the upper part of the screen without being hit by an enemy.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+### Gaming process
+
+* The player can move character with "Up", "Down", "Left" and "Right" arrow keys with discrete moves.
+* Enemies are are appearing on the "stone" blocks in the upper part of the screen, moving left to right with random speed
+* Enemies appear in random intervals that have poisson distribution with mean time equal to 1 s.
+* Each time player reaches top of screen or is hit by an enemy - he is moved to initial position at the bottom of the screen.
+
+### How to play
+
+Just open `index.html` file in your browser. Make sure Javascript is also enabled
+
+### Known issues
+
+* Clicking somewhere inbetween the cards counts as flipping a card
+* Interaction with cards during animation or in case of wrong guess, before cards are flipped face is not restricted now and may cause bugs.

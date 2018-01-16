@@ -13,8 +13,3 @@ This project represents a very basic browser version of a game called _"Frogger"
 ### How to play
 
 Just open `index.html` file in your browser. Make sure Javascript is also enabled
-
-### Known issues
-
-* Clicking somewhere inbetween the cards counts as flipping a card
-* Interaction with cards during animation or in case of wrong guess, before cards are flipped face is not restricted now and may cause bugs.

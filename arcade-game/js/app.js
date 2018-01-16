@@ -32,10 +32,13 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.position.x, this.position.y);
 };
 
+// Object coordinated represent top left corner of a sprite.
+// Collision tracking could be better done with center coordinated of each frame
 Enemy.prototype.getCenterCoord = function () {
     return {xCenter: this.position.x + 50, yCenter: this.position.y + 85}
 }
 
+// Random integer between in (min, max) interval
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -63,6 +66,7 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(action) {
     let newPos;
+    // Depending on user action check that new coords are not off the canvas and then update them
     switch (action) {
         case 'left':
             newPos = this.position.x - 101;

@@ -89,6 +89,7 @@ var Engine = (function(global) {
         }
     }
 
+    // If the distance between enemy and player centers is lower than threshold - reset game state
     function checkCollisions() {
         const COLLISION_THRESHOLD = 70;
         allEnemies.forEach(enemy => {
@@ -100,6 +101,7 @@ var Engine = (function(global) {
         })
     }
 
+    // The player has won if he's standing on the "water" block on top of the screen
     function checkVictory() {
         return player.position.y < 63;
     }
@@ -112,6 +114,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        // Remove enemies that are off canvas from allEnemies array
         allEnemies = allEnemies.filter(enemy => enemy.position.x < 505);
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
@@ -184,6 +187,7 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+        // Return player to his initial position
         player.position.x = 101 * 2;
         player.position.y = 83 * 5 -20;
         //allEnemies = [];

@@ -82,28 +82,10 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
-        if (checkVictory()) {
-            console.log("Victory!");
+        player.checkCollisions(allEnemies);
+        if (player.result == 1 || player.result == 0) {
             reset();
         }
-    }
-
-    // If the distance between enemy and player centers is lower than threshold - reset game state
-    function checkCollisions() {
-        const COLLISION_THRESHOLD = 70;
-        allEnemies.forEach(enemy => {
-            var enemyCoord = enemy.getCenterCoord();
-            var playerCoord = player.getCenterCoord();
-            if (Math.sqrt((enemyCoord.xCenter - playerCoord.xCenter)**2 + (enemyCoord.yCenter - playerCoord.yCenter)**2) < COLLISION_THRESHOLD) {
-                reset();
-            }
-        })
-    }
-
-    // The player has won if he's standing on the "water" block on top of the screen
-    function checkVictory() {
-        return player.position.y < 63;
     }
 
     /* This is called by the update function and loops through all of the
@@ -190,6 +172,7 @@ var Engine = (function(global) {
         // Return player to his initial position
         player.position.x = 101 * 2;
         player.position.y = 83 * 5 -20;
+        player.result = null;
         //allEnemies = [];
     }
 

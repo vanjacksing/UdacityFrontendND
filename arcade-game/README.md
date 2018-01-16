@@ -12,4 +12,5 @@ This project represents a very basic browser version of a game called _"Frogger"
 
 ### How to play
 
-Just open `index.html` file in your browser. Make sure Javascript is also enabled
+Just open `index.html` file in your browser. Make sure Javascript is also enabled.
+There is also live version on the [web](https://vanjacksing.github.io/UdacityFrontendND/arcade-game/)

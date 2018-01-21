@@ -36,7 +36,7 @@ $(function() {
                 expect(feed.url).toBeDefined();
                 expect(feed.url).not.toBe('');
                 expect(feed.url).not.toBeNull();
-            })
+            });
         });
 
         /* TODO: Write a test that loops through each feed
@@ -123,7 +123,7 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
       // Container for all feed entries
-      let feedContainer = document.querySelector('.feed');;
+      let feedContainer = document.querySelector('.feed');
       let beforeUpdate, afterUpdate;
 
       // Ensure loadFeed function is executed before actual test

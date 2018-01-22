@@ -95,9 +95,6 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-      // Container for all feed entries
-      let feedContainer = document.querySelector('.feed');
-
       // Ensure loadFeed function is executed before actual test
       beforeEach(function(done) {
           loadFeed(0, done);
@@ -105,13 +102,7 @@ $(function() {
 
       it("should contain at least 1 entry when loadFeed is finished", function(done) {
           // Variable indicating that there is '.entry' element inside '.feed' node
-          let containsEntry = false;
-
-          // Check '.feed' children and if there is an '.entry' set the result to true
-          Array.from(feedContainer.children).forEach(function(entry) {
-              if (entry.firstElementChild.classList.contains("entry")) containsEntry = true;
-        });
-        expect(containsEntry).toBe(true);
+        expect(document.querySelectorAll('.feed .entry').length).toBeGreaterThan(0);
         done();
       });
     });
@@ -128,9 +119,10 @@ $(function() {
 
       // Ensure loadFeed function is executed before actual test
       beforeEach(function(done) {
-          // '.feed' content before loading another feed
-          beforeUpdate = feedContainer.innerText;
-          loadFeed(1, done);
+          loadFeed(1, function() {
+            beforeUpdate = feedContainer.innerText;
+            loadFeed(2, done);
+          });
       });
 
         it('should load new content when new feed is loaded', function (done) {
